@@ -116,9 +116,9 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                oddsButton('1', homeOdds),
-                oddsButton('X', drawOdds),
-                oddsButton('2', awayOdds),
+                oddsButton(context, '1', homeOdds),
+oddsButton(context, 'X', drawOdds),
+oddsButton(context, '2', awayOdds),
               ],
             ),
           ],
@@ -127,9 +127,34 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget oddsButton(String label, String odds) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+Widget oddsButton(
+  BuildContext context,
+  String label,
+  String odds,
+) {
+  return InkWell(
+    onTap: () {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Selection added'),
+          content: Text(
+            'You selected $label at odds $odds',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    },
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 14,
+      ),
       decoration: BoxDecoration(
         color: const Color(0xFFFFD700),
         borderRadius: BorderRadius.circular(8),
@@ -142,6 +167,6 @@ class HomePage extends StatelessWidget {
           fontWeight: FontWeight.bold,
         ),
       ),
-    );
-  }
-}
+    ),
+  );
+}  
